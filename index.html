@@ -1,0 +1,326 @@
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500&display=swap');
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  .store { font-family: 'DM Sans', sans-serif; background: var(--color-background-tertiary); color: var(--color-text-primary); }
+  .nav { background: #0a0a0a; padding: 14px 40px; display: flex; align-items: center; justify-content: space-between; }
+  .logo { font-family: 'Bebas Neue', sans-serif; font-size: 28px; color: #f5c518; letter-spacing: 2px; }
+  .nav-links { display: flex; gap: 28px; }
+  .nav-links a { color: #ddd; font-size: 13px; text-decoration: none; text-transform: uppercase; letter-spacing: 1px; }
+  .nav-links a:hover { color: #f5c518; }
+  .nav-right { display: flex; gap: 16px; align-items: center; }
+  .nav-icon { width: 34px; height: 34px; border: 0.5px solid #444; border-radius: 6px; display: flex; align-items: center; justify-content: center; cursor: pointer; color: #ccc; font-size: 14px; }
+  .cart-count { background: #f5c518; color: #000; font-size: 10px; font-weight: 500; border-radius: 50%; width: 16px; height: 16px; display: flex; align-items: center; justify-content: center; margin-left: -8px; margin-top: -10px; }
+
+  .hero { background: #0a0a0a; padding: 80px 40px 60px; display: flex; align-items: center; gap: 60px; position: relative; overflow: hidden; }
+  .hero-bg { position: absolute; right: 0; top: 0; bottom: 0; width: 55%; background: linear-gradient(135deg, #111 0%, #1a1a1a 100%); }
+  .hero-content { position: relative; z-index: 2; flex: 0 0 45%; }
+  .hero-badge { display: inline-block; background: #f5c518; color: #000; font-size: 11px; font-weight: 500; padding: 4px 12px; border-radius: 4px; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 20px; }
+  .hero-title { font-family: 'Bebas Neue', sans-serif; font-size: 72px; color: #fff; line-height: 0.95; margin-bottom: 20px; }
+  .hero-title span { color: #f5c518; }
+  .hero-desc { color: #aaa; font-size: 15px; line-height: 1.7; margin-bottom: 32px; max-width: 360px; }
+  .hero-btns { display: flex; gap: 12px; }
+  .btn-primary { background: #f5c518; color: #000; padding: 12px 28px; border-radius: 6px; font-size: 14px; font-weight: 500; cursor: pointer; border: none; letter-spacing: 0.5px; }
+  .btn-secondary { background: transparent; color: #fff; padding: 12px 28px; border-radius: 6px; font-size: 14px; font-weight: 500; cursor: pointer; border: 1.5px solid #444; letter-spacing: 0.5px; }
+  .hero-cards { position: relative; z-index: 2; flex: 1; display: flex; gap: 16px; }
+  .hero-card { flex: 1; background: #1a1a1a; border-radius: 12px; padding: 20px; border: 0.5px solid #2a2a2a; }
+  .hero-card-tag { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: #888; margin-bottom: 8px; }
+  .hero-card-title { font-size: 16px; font-weight: 500; color: #fff; margin-bottom: 6px; }
+  .hero-card-price { font-size: 18px; font-family: 'Bebas Neue', sans-serif; color: #f5c518; }
+  .hero-img-placeholder { width: 100%; aspect-ratio: 1; background: #2a2a2a; border-radius: 8px; margin-bottom: 12px; display: flex; align-items: center; justify-content: center; font-size: 32px; }
+  .hero-stats { display: flex; gap: 40px; margin-top: 40px; }
+  .stat { }
+  .stat-num { font-family: 'Bebas Neue', sans-serif; font-size: 36px; color: #f5c518; }
+  .stat-label { font-size: 12px; color: #777; text-transform: uppercase; letter-spacing: 0.5px; }
+
+  .announce { background: #f5c518; padding: 10px; text-align: center; font-size: 13px; font-weight: 500; color: #000; letter-spacing: 0.5px; }
+
+  .section { padding: 60px 40px; }
+  .section-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 36px; }
+  .section-title { font-family: 'Bebas Neue', sans-serif; font-size: 42px; color: var(--color-text-primary); }
+  .section-title span { color: #f5c518; }
+  .see-all { font-size: 13px; color: #f5c518; cursor: pointer; text-decoration: none; border-bottom: 1px solid #f5c518; padding-bottom: 2px; }
+
+  .categories { display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px; }
+  .cat-card { background: var(--color-background-secondary); border-radius: 12px; border: 0.5px solid var(--color-border-tertiary); padding: 20px 12px; text-align: center; cursor: pointer; transition: border-color 0.2s; }
+  .cat-card:hover { border-color: #f5c518; }
+  .cat-icon { font-size: 28px; margin-bottom: 10px; }
+  .cat-name { font-size: 12px; font-weight: 500; text-transform: uppercase; letter-spacing: 1px; color: var(--color-text-secondary); }
+  .cat-count { font-size: 11px; color: var(--color-text-tertiary); margin-top: 4px; }
+  .cat-card.active { background: #0a0a0a; border-color: #f5c518; }
+  .cat-card.active .cat-name { color: #f5c518; }
+
+  .products { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+  .product-card { background: var(--color-background-primary); border-radius: 12px; border: 0.5px solid var(--color-border-tertiary); overflow: hidden; cursor: pointer; }
+  .product-img { aspect-ratio: 1; background: var(--color-background-secondary); display: flex; align-items: center; justify-content: center; font-size: 48px; position: relative; }
+  .product-badge { position: absolute; top: 10px; left: 10px; background: #f5c518; color: #000; font-size: 10px; font-weight: 500; padding: 3px 8px; border-radius: 4px; text-transform: uppercase; }
+  .product-badge.sold-out { background: #333; color: #aaa; }
+  .product-badge.new { background: #0a0a0a; color: #f5c518; }
+  .product-info { padding: 14px 16px; }
+  .product-cat { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: var(--color-text-tertiary); margin-bottom: 4px; }
+  .product-name { font-size: 14px; font-weight: 500; margin-bottom: 8px; color: var(--color-text-primary); }
+  .product-footer { display: flex; align-items: center; justify-content: space-between; }
+  .product-price { font-family: 'Bebas Neue', sans-serif; font-size: 20px; color: var(--color-text-primary); }
+  .product-old { font-size: 11px; color: var(--color-text-tertiary); text-decoration: line-through; }
+  .add-btn { width: 30px; height: 30px; background: #f5c518; color: #000; border: none; border-radius: 6px; cursor: pointer; font-size: 16px; display: flex; align-items: center; justify-content: center; }
+
+  .promo-band { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; padding: 0 40px 60px; }
+  .promo-card { border-radius: 16px; padding: 40px; display: flex; justify-content: space-between; align-items: center; }
+  .promo-card.dark { background: #0a0a0a; color: #fff; }
+  .promo-card.gold { background: #f5c518; color: #000; }
+  .promo-label { font-size: 11px; text-transform: uppercase; letter-spacing: 2px; opacity: 0.7; margin-bottom: 8px; }
+  .promo-title { font-family: 'Bebas Neue', sans-serif; font-size: 40px; line-height: 1; margin-bottom: 16px; }
+  .promo-cta { font-size: 13px; font-weight: 500; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; border-bottom: 1.5px solid; padding-bottom: 2px; }
+  .promo-emoji { font-size: 72px; }
+
+  .filter-tabs { display: flex; gap: 8px; margin-bottom: 28px; }
+  .tab { padding: 8px 18px; border-radius: 20px; border: 0.5px solid var(--color-border-secondary); font-size: 13px; cursor: pointer; color: var(--color-text-secondary); background: transparent; }
+  .tab.active { background: #0a0a0a; color: #f5c518; border-color: #f5c518; }
+
+  .trust-bar { background: var(--color-background-secondary); border-top: 0.5px solid var(--color-border-tertiary); border-bottom: 0.5px solid var(--color-border-tertiary); padding: 28px 40px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+  .trust-item { display: flex; align-items: center; gap: 12px; }
+  .trust-icon { width: 40px; height: 40px; background: var(--color-background-primary); border-radius: 8px; border: 0.5px solid var(--color-border-tertiary); display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
+  .trust-text .t1 { font-size: 13px; font-weight: 500; color: var(--color-text-primary); }
+  .trust-text .t2 { font-size: 12px; color: var(--color-text-tertiary); }
+
+  .testimonial-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .review-card { background: var(--color-background-primary); border-radius: 12px; border: 0.5px solid var(--color-border-tertiary); padding: 20px; }
+  .stars { color: #f5c518; font-size: 13px; margin-bottom: 10px; }
+  .review-text { font-size: 13px; color: var(--color-text-secondary); line-height: 1.6; margin-bottom: 14px; }
+  .reviewer { display: flex; align-items: center; gap: 10px; }
+  .avatar { width: 32px; height: 32px; border-radius: 50%; background: var(--color-background-info); display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 500; color: var(--color-text-info); }
+  .reviewer-info .name { font-size: 13px; font-weight: 500; }
+  .reviewer-info .date { font-size: 11px; color: var(--color-text-tertiary); }
+
+  .footer { background: #0a0a0a; padding: 60px 40px 30px; }
+  .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 50px; }
+  .footer-logo { font-family: 'Bebas Neue', sans-serif; font-size: 32px; color: #f5c518; margin-bottom: 14px; }
+  .footer-about { font-size: 13px; color: #777; line-height: 1.7; margin-bottom: 20px; }
+  .footer-social { display: flex; gap: 10px; }
+  .social-btn { width: 36px; height: 36px; border: 0.5px solid #333; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 14px; cursor: pointer; color: #777; }
+  .footer-heading { font-size: 12px; text-transform: uppercase; letter-spacing: 1.5px; color: #555; margin-bottom: 18px; }
+  .footer-links { display: flex; flex-direction: column; gap: 10px; }
+  .footer-links a { font-size: 13px; color: #888; text-decoration: none; cursor: pointer; }
+  .footer-links a:hover { color: #f5c518; }
+  .footer-bottom { border-top: 0.5px solid #1f1f1f; padding-top: 24px; display: flex; justify-content: space-between; align-items: center; }
+  .footer-copy { font-size: 12px; color: #555; }
+  .payment-icons { display: flex; gap: 8px; }
+  .payment { font-size: 10px; background: #1a1a1a; color: #666; padding: 4px 10px; border-radius: 4px; border: 0.5px solid #2a2a2a; }
+
+  .section-dark { background: #0a0a0a; }
+  .section-dark .section-title { color: #fff; }
+</style>
+
+<div class="store">
+  <div class="announce">🎉 Free shipping on orders over $50 · Use code VINTAGE20 for 20% off your first order</div>
+
+  <nav class="nav">
+    <div class="logo">SPORTTNE</div>
+    <div class="nav-links">
+      <a href="#">New Arrivals</a>
+      <a href="#">Music Tees</a>
+      <a href="#">Sports</a>
+      <a href="#">Movies / TV</a>
+      <a href="#">Vintage</a>
+      <a href="#">Video Games</a>
+      <a href="#">Sale</a>
+    </div>
+    <div class="nav-right">
+      <div class="nav-icon">🔍</div>
+      <div class="nav-icon">👤</div>
+      <div style="display:flex; align-items:flex-start;">
+        <div class="nav-icon">🛒</div>
+        <div class="cart-count">3</div>
+      </div>
+    </div>
+  </nav>
+
+  <div class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-content">
+      <div class="hero-badge">New Drop — Spring 2025</div>
+      <div class="hero-title">Wear the<br><span>Culture.</span></div>
+      <p class="hero-desc">Iconic vintage graphic tees celebrating music, film, sports & gaming. Designs you won't find anywhere else.</p>
+      <div class="hero-btns">
+        <button class="btn-primary">Shop New Arrivals</button>
+        <button class="btn-secondary">Browse All Tees</button>
+      </div>
+      <div class="hero-stats">
+        <div class="stat"><div class="stat-num">500+</div><div class="stat-label">Unique Designs</div></div>
+        <div class="stat"><div class="stat-num">50K+</div><div class="stat-label">Orders Shipped</div></div>
+        <div class="stat"><div class="stat-num">4.7★</div><div class="stat-label">Avg. Rating</div></div>
+      </div>
+    </div>
+    <div class="hero-cards">
+      <div class="hero-card">
+        <div class="hero-img-placeholder">🎸</div>
+        <div class="hero-card-tag">Music · Limited</div>
+        <div class="hero-card-title">Vintage Rock Legend Tee</div>
+        <div class="hero-card-price">$34.99</div>
+      </div>
+      <div class="hero-card" style="margin-top:24px;">
+        <div class="hero-img-placeholder">🏀</div>
+        <div class="hero-card-tag">Sports · New</div>
+        <div class="hero-card-title">Classic NBA Retro Tee</div>
+        <div class="hero-card-price">$29.99</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="trust-bar">
+    <div class="trust-item"><div class="trust-icon">🚚</div><div class="trust-text"><div class="t1">Free Shipping</div><div class="t2">On orders over $50</div></div></div>
+    <div class="trust-item"><div class="trust-icon">↩️</div><div class="trust-text"><div class="t1">Easy Returns</div><div class="t2">30-day hassle-free policy</div></div></div>
+    <div class="trust-item"><div class="trust-icon">🎨</div><div class="trust-text"><div class="t1">Premium Print Quality</div><div class="t2">Vibrant, long-lasting ink</div></div></div>
+    <div class="trust-item"><div class="trust-icon">🔒</div><div class="trust-text"><div class="t1">Secure Checkout</div><div class="t2">SSL encrypted payments</div></div></div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <div class="section-title">Shop by <span>Category</span></div>
+    </div>
+    <div class="categories">
+      <div class="cat-card active"><div class="cat-icon">🎵</div><div class="cat-name">Music Tees</div><div class="cat-count">142 styles</div></div>
+      <div class="cat-card"><div class="cat-icon">🏆</div><div class="cat-name">Sports</div><div class="cat-count">98 styles</div></div>
+      <div class="cat-card"><div class="cat-icon">🎬</div><div class="cat-name">Movies / TV</div><div class="cat-count">176 styles</div></div>
+      <div class="cat-card"><div class="cat-icon">📻</div><div class="cat-name">Vintage</div><div class="cat-count">84 styles</div></div>
+      <div class="cat-card"><div class="cat-icon">🎮</div><div class="cat-name">Video Games</div><div class="cat-count">61 styles</div></div>
+      <div class="cat-card"><div class="cat-icon">🔥</div><div class="cat-name">Best Sellers</div><div class="cat-count">Top 50</div></div>
+    </div>
+  </div>
+
+  <div class="section" style="padding-top:0;">
+    <div class="section-header">
+      <div>
+        <div class="section-title">New <span>Arrivals</span></div>
+        <div class="filter-tabs" style="margin-bottom:0; margin-top:14px;">
+          <button class="tab active">All</button>
+          <button class="tab">Music</button>
+          <button class="tab">Sports</button>
+          <button class="tab">Movies</button>
+          <button class="tab">Gaming</button>
+        </div>
+      </div>
+      <a class="see-all" href="#">View all →</a>
+    </div>
+    <div class="products">
+      <div class="product-card">
+        <div class="product-img">🎸<span class="product-badge new">New</span></div>
+        <div class="product-info">
+          <div class="product-cat">Music Tee</div>
+          <div class="product-name">Classic Rock Band Vintage Tee</div>
+          <div class="product-footer"><div><div class="product-price">$34.99</div><div class="product-old">$44.99</div></div><button class="add-btn">+</button></div>
+        </div>
+      </div>
+      <div class="product-card">
+        <div class="product-img">🏀<span class="product-badge">Sale</span></div>
+        <div class="product-info">
+          <div class="product-cat">Sports</div>
+          <div class="product-name">Retro NBA Championship Tee</div>
+          <div class="product-footer"><div><div class="product-price">$29.99</div><div class="product-old">$39.99</div></div><button class="add-btn">+</button></div>
+        </div>
+      </div>
+      <div class="product-card">
+        <div class="product-img">🎬<span class="product-badge new">New</span></div>
+        <div class="product-info">
+          <div class="product-cat">Movies / TV</div>
+          <div class="product-name">80s Cult Classic Film Tee</div>
+          <div class="product-footer"><div><div class="product-price">$31.99</div></div><button class="add-btn">+</button></div>
+        </div>
+      </div>
+      <div class="product-card">
+        <div class="product-img">🎮</div>
+        <div class="product-info">
+          <div class="product-cat">Video Games</div>
+          <div class="product-name">Retro Console Gaming Tee</div>
+          <div class="product-footer"><div><div class="product-price">$27.99</div></div><button class="add-btn">+</button></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="promo-band">
+    <div class="promo-card dark">
+      <div>
+        <div class="promo-label">Limited Collection</div>
+        <div class="promo-title">Vintage<br>Rock<br>Icons</div>
+        <div class="promo-cta" style="color:#f5c518; border-color:#f5c518;">Shop Music Tees →</div>
+      </div>
+      <div class="promo-emoji">🎸</div>
+    </div>
+    <div class="promo-card gold">
+      <div>
+        <div class="promo-label">Exclusive Drop</div>
+        <div class="promo-title">Sports<br>Legends<br>Series</div>
+        <div class="promo-cta" style="color:#000; border-color:#000;">Shop Sports Tees →</div>
+      </div>
+      <div class="promo-emoji">🏆</div>
+    </div>
+  </div>
+
+  <div class="section section-dark">
+    <div class="section-header">
+      <div class="section-title">Customer <span>Reviews</span></div>
+      <a class="see-all" href="#">Read all reviews →</a>
+    </div>
+    <div class="testimonial-row">
+      <div class="review-card" style="background:#111; border-color:#2a2a2a;">
+        <div class="stars">★★★★★</div>
+        <div class="review-text" style="color:#aaa;">"Got so many compliments wearing this shirt. The print quality is great and it fits perfectly. Definitely ordering more."</div>
+        <div class="reviewer"><div class="avatar" style="background:#1a2a1a; color:#5a9a5a;">JM</div><div class="reviewer-info"><div class="name" style="color:#ddd;">James M.</div><div class="date" style="color:#555;">Music Tee · Jan 2025</div></div></div>
+      </div>
+      <div class="review-card" style="background:#111; border-color:#2a2a2a;">
+        <div class="stars">★★★★★</div>
+        <div class="review-text" style="color:#aaa;">"Unique designs you genuinely can't find anywhere else. Shipped faster than expected. Will be a repeat customer for sure."</div>
+        <div class="reviewer"><div class="avatar" style="background:#1a1a2a; color:#5a5ac0;">SR</div><div class="reviewer-info"><div class="name" style="color:#ddd;">Sarah R.</div><div class="date" style="color:#555;">Sports · Dec 2024</div></div></div>
+      </div>
+      <div class="review-card" style="background:#111; border-color:#2a2a2a;">
+        <div class="stars">★★★★☆</div>
+        <div class="review-text" style="color:#aaa;">"Great vintage feel. Sizing runs a little big so I'd size down, but the design is exactly like the photo. Very happy overall."</div>
+        <div class="reviewer"><div class="avatar" style="background:#2a1a1a; color:#c05a5a;">DK</div><div class="reviewer-info"><div class="name" style="color:#ddd;">David K.</div><div class="date" style="color:#555;">Movie Tee · Feb 2025</div></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo">SPORTTNE</div>
+        <div class="footer-about">Your go-to destination for iconic vintage graphic tees. We update our collections regularly with designs you can't find anywhere else.</div>
+        <div class="footer-social">
+          <div class="social-btn">f</div>
+          <div class="social-btn">ig</div>
+          <div class="social-btn">tw</div>
+          <div class="social-btn">tt</div>
+        </div>
+      </div>
+      <div>
+        <div class="footer-heading">Shop</div>
+        <div class="footer-links">
+          <a>New Arrivals</a><a>Music Tees</a><a>Sports</a><a>Movies / TV</a><a>Vintage</a><a>Video Games</a><a>Sale</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-heading">Help</div>
+        <div class="footer-links">
+          <a>Track Order</a><a>Size Chart</a><a>Returns & Exchanges</a><a>Shipping Info</a><a>FAQ</a><a>Contact Us</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-heading">Company</div>
+        <div class="footer-links">
+          <a>About Us</a><a>Wholesale</a><a>Become an Affiliate</a><a>Privacy Policy</a><a>Terms & Conditions</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copy">© 2025 SPORTTNE. All rights reserved.</div>
+      <div class="payment-icons">
+        <div class="payment">VISA</div>
+        <div class="payment">MC</div>
+        <div class="payment">PayPal</div>
+        <div class="payment">Amex</div>
+        <div class="payment">Apple Pay</div>
+      </div>
+    </div>
+  </div>
+</div>
